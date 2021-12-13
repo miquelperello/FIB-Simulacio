@@ -24,26 +24,30 @@ class Cua:
         
             
     def mostradorslliures(self):
-        return self.mostradors.return_mida_mostradors()
+        return self.mostradors.return_mostradors_lliures()
         
         
-    def eliminaMostradorLliure(self):
-        self.mostradors.elimina_mostrador()
+    def eliminaMostradorLliure(self, event):
+        return self.mostradors.elimina_mostrador(event)
 
-    def afegeixMostradorLliure(self):
-        self.mostradors.afegeix_mostrador()    
+    def afegeixMostradorLliure(self, event):
+        self.mostradors.afegeix_mostrador(event)    
     
     def eliminaPassatgerCua(self, entitat):
         self.cua.remove(entitat)
         
     #El primer passatger que estava fent cua, ara pot anar al mostrador
-    def RecuperaPassatgerCua(self, temps):
+    def RecuperaPassatgerCua(self, event):
         
-        _passatger = self.cua.pop(0)
-        novaArribada = Event(self.mostradors, temps, EventType.PASSATGER_A_MOSTRADOR, _passatger)
+        _passatger = self.cua[0]
+        novaArribada = Event(self.mostradors, event.tid+_passatger.temps, EventType.PASSATGER_A_MOSTRADOR, _passatger)
         self.scheduler.afegirEsdeveniment(novaArribada)
-        #No fem remove pq hem fet pop
-        self.eliminaMostradorLliure()
+        #Eliminem passatger de la cua
+        try:
+            self.cua.pop(0)
+        except:
+            print("error")
+        
 
     def tractarEsdeveniment(self, event):
 
@@ -53,16 +57,27 @@ class Cua:
                 self.state = State.ACTIVE
                 # TO-DO Distribució. Ara 10 segons temps a fer la cua (arribar al mostrador)
                 event = Event(self.mostradors, event.tid + 10, EventType.PASSATGER_A_MOSTRADOR, event.entitat)
+                #Posem al passatger el temps de mostrador
+                event.entitat.temps = event.tid + 10
                 self.scheduler.afegirEsdeveniment(event)
                 #Si encara hi ha gent fent cua...
+                
                 if((len(self.cua))!=0):
                     self.eliminaPassatgerCua(event.entitat)
-                    self.eliminaMostradorLliure()
+                    mostrador_lliure = self.eliminaMostradorLliure(event)
+                    #Assignem Mostrador a Passatger
+                    event.entitat.mostrador_assignat = mostrador_lliure
+
+
         #Si el passatger surt del mostrador, s'afegeix un mostrador lliure i s'afegeix al primer passatger
         elif(event.type == EventType.PASSATGER_SURT_MOSTRADOR):
-            self.afegeixMostradorLliure()
+            self.afegeixMostradorLliure(event)
             if((len(self.cua))!=0):
-                self.RecuperaPassatgerCua(event.tid)
+                #TO-DO Enviem a gent que encara no està a la cua
+                mostrador_lliure = self.eliminaMostradorLliure(event)
+                event.entitat.mostrador_assignat = mostrador_lliure
+                self.RecuperaPassatgerCua(event)
+                
             #Sino, cua buida, canviem estat
             else:  
                 self.state = State.INACTIVE
