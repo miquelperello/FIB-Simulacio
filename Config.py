@@ -31,9 +31,10 @@ class Config:
         Config.get_treballadors()
         Config.get_passatgers()
         Config.get_veuretraza()
+        TOP.destroy()
 
     def configurarModel(self):
-        global mostradors, treballadors, passatgers, ENTRY1, ENTRY2, ENTRY3
+        global mostradors, treballadors, passatgers, ENTRY1, ENTRY2, ENTRY3, TOP
         TOP = Tk()
         TOP.geometry("600x500")
         TOP.configure(background="#382343")
