@@ -39,6 +39,11 @@ class Config:
         TOP.configure(background="#382343")
         TOP.title("Simulador de Mida")
         TOP.resizable(width=False, height=False)
+        bg = PhotoImage(file="airplane.gif")
+
+        my_canvas=Canvas(TOP)
+        my_canvas.pack(fill="both", expand=True)
+        my_canvas.create_image(300, 250, image=bg)
         LABEL = Label(TOP, bg="#382343",fg="#ffffff", text="Benvingut a la facturació de la maleta", font=("Helvetica", 15, "bold"), pady=10)
         LABEL.place(x=105, y=0)
         LABEL1 = Label(TOP, bg="#382343",fg="#ffffff", text="Quants treballadors vols per mostrador? ", bd=6,font=("Helvetica", 10, "bold"), pady=5)
@@ -54,7 +59,7 @@ class Config:
         ENTRY3 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         ENTRY3.place(x=425, y=181)
         BUTTON = Button(bg="#382343",fg='#ffffff', bd=12, text="Començar",command = Config.get_all, padx=33, pady=10,font=("Helvetica", 20, "bold"))
-        BUTTON.grid(row=5, column=0, sticky=W)
+        #BUTTON.grid(row=5, column=0, sticky=W)
         BUTTON.place(x=175, y=250)
         TOP.mainloop()
         Config.mostradors = 6

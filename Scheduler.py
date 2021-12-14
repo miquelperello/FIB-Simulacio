@@ -1,8 +1,9 @@
 import bisect
 from Event import *
 from Source import *
- 
+
 from Config import *
+
 import time
 
 class Scheduler:
@@ -18,7 +19,7 @@ class Scheduler:
         # creació dels objectes que composen el meu model
         self.simulationStart=Event(self,0,EventType.SimulationStart,None)
         self.afegirEsdeveniment(self.simulationStart)
-
+ 
          
         
         
