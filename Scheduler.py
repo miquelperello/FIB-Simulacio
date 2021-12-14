@@ -59,17 +59,17 @@ class Scheduler:
             if event.type==EventType.ENTRA_A_CUA:
                 color=Colors.OKBLUE
                 self.pa_cua +=1
-            if event.type==EventType.PASSATGER_A_MOSTRADOR:
+            elif event.type==EventType.PASSATGER_A_MOSTRADOR:
                 color=Colors.HEADER
                 self.pa_mostra +=1
-            if event.type==EventType.PASSATGER_SURT_MOSTRADOR:
+            elif event.type==EventType.PASSATGER_SURT_MOSTRADOR:
                 color=Colors.OKGREEN
                 self.pa_surt_mostra +=1
-            if event.type==EventType.MOSTRADOR_INICIALITZAT:
+            elif event.type==EventType.MOSTRADOR_INICIALITZAT:
                 color=Colors.OKCYAN
-            if event.type==EventType.SimulationStart:
+            elif event.type==EventType.SimulationStart:
                 color=Colors.OKRARO
-            if event.type==EventType.CANVI_DE_TORN:
+            elif event.type==EventType.CANVI_DE_TORN:
                 color=Colors.OKRANDOM
                
             print(color,event.tid,event.type,' ',event.objekt,Colors.ENDC)

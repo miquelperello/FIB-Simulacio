@@ -6,9 +6,9 @@ class State(Enum):
     ACTIVE  = 3
     BUSY = 4
     OCCUPIED = 5
-    ACCESSS = 6
-    ACCESSO = 7
-    ACCESSN = 8
+    WAITING = 6
+    READY = 7
+    PROCESSING = 8
 
 class EventType(Enum):
     ENTRA_A_CUA=1

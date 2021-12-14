@@ -40,13 +40,16 @@ class Cua:
     def RecuperaPassatgerCua(self, event):
         
         _passatger = self.cua[0]
+        #_passatger.estat = State.WAITING
+        #_passatger.temps_entrada_cua =  event.tid + 10
         novaArribada = Event(self.mostradors, event.tid+_passatger.temps, EventType.PASSATGER_A_MOSTRADOR, _passatger)
         self.scheduler.afegirEsdeveniment(novaArribada)
         #Eliminem passatger de la cua
-        try:
+        
+        #print(_passatger.temps_entrada_cua)
+        if(event.tid > _passatger.temps_entrada_cua):
             self.cua.pop(0)
-        except:
-            print("error")
+       
         
 
     def tractarEsdeveniment(self, event):
@@ -54,7 +57,8 @@ class Cua:
         if(event.type == EventType.ENTRA_A_CUA):
             if(self.mostradorslliures() > 0 ):
                 #Definim estat actiu
-                self.state = State.ACTIVE
+                event.entitat.estat = State.WAITING
+                event.entitat.temps_entrada_cua = event.tid
                 # TO-DO Distribució. Ara 10 segons temps a fer la cua (arribar al mostrador)
                 event = Event(self.mostradors, event.tid + 10, EventType.PASSATGER_A_MOSTRADOR, event.entitat)
                 #Posem al passatger el temps de mostrador
@@ -72,15 +76,21 @@ class Cua:
         #Si el passatger surt del mostrador, s'afegeix un mostrador lliure i s'afegeix al primer passatger
         elif(event.type == EventType.PASSATGER_SURT_MOSTRADOR):
             self.afegeixMostradorLliure(event)
+            
             if((len(self.cua))!=0):
+                event.entitat.temps_sortida_mostrador = event.tid
+                
                 #TO-DO Enviem a gent que encara no està a la cua
                 mostrador_lliure = self.eliminaMostradorLliure(event)
                 event.entitat.mostrador_assignat = mostrador_lliure
                 self.RecuperaPassatgerCua(event)
-                
+                print("###Resultats passatger: ", event.entitat.temps_entrada_cua, " ", event.entitat.temps_entrada_mostrador, " ", event.entitat.temps_sortida_mostrador)
+    
             #Sino, cua buida, canviem estat
             else:  
                 self.state = State.INACTIVE
+                event.entitat.temps_sortida_mostrador = event.tid
+                print("###Resultats passatger: ", event.entitat.temps_entrada_cua, " ", event.entitat.temps_entrada_mostrador, " ", event.entitat.temps_sortida_mostrador)
             
             
            

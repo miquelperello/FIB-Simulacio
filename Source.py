@@ -32,6 +32,7 @@ class Source:
         tempsEntreArribades = 1
 
         #Definim tants mostradors com definit a config.
+        # TO-DO max de mostradors (1r,2o o 3r turno)
         for i in range (0, int(self.config.mostradors)):
             mostrador = Mostradors()
             mostradorInicialitzat = Event(self.mostrador, 0, EventType.MOSTRADOR_INICIALITZAT, mostrador)
@@ -56,6 +57,7 @@ class Source:
             # posar distribució
             tempsEntreArribades+=60
             self.afegirCua(passatger)
+            passatger.temps_entrada_cua=tempsEntreArribades
             #TO-DO 10 --> temps a fer la cua
             novaArribada = Event(self.cua, tempsEntreArribades, EventType.ENTRA_A_CUA, passatger)
             self.scheduler.afegirEsdeveniment(novaArribada)

@@ -34,6 +34,8 @@ class Mostradors:
     def elimina_mostrador(self, event):
         #self.LlistaMostradorsLliures.pop(0)
 
+
+
          for item in range(0, len(self.LlistaMostradorsLliures)):
 	            if (self.LlistaMostradorsLliures[item].estat == State.ACTIVE):
                         #print("does it work?")
@@ -107,8 +109,8 @@ class Mostradors:
             
             #print(self.LlistaMostradorsLliures[0].estat)
 
-           
-            
+            event.entitat.estat = State.PROCESSING
+            event.entitat.temps_entrada_mostrador = event.tid
 
 
 
@@ -123,6 +125,7 @@ class Mostradors:
             #Creem l'esdeveniment passatger
             eventPassatger = Event(self.cua, event.tid + tempsFacturacio, EventType.PASSATGER_SURT_MOSTRADOR, event.entitat)
             self.scheduler.afegirEsdeveniment(eventPassatger)
+            
         elif (event.type==EventType.PASSATGER_SURT_MOSTRADOR):
             self.LlistaMostradorsLliures.append(1)   
 
