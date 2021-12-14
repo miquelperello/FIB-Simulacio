@@ -25,7 +25,7 @@ class Config:
         Config.passatgers = passatgers
     def get_veuretraza():
         veuretraza = ENTRY3.get()
-        Config.veuretraza = veuretraza
+        Config.veuretraza = int(veuretraza)
 
     def get_all():
         Config.get_treballadors()

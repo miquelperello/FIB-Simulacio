@@ -20,6 +20,7 @@ class Source:
         self.config = config
         self.cua = cua
         self.mostrador = mostrador
+        self.entitats_creades = 0
         #self.scheduler = Scheduler()
 
 
@@ -61,6 +62,7 @@ class Source:
             #TO-DO 10 --> temps a fer la cua
             novaArribada = Event(self.cua, tempsEntreArribades, EventType.ENTRA_A_CUA, passatger)
             self.scheduler.afegirEsdeveniment(novaArribada)
+            self.entitats_creades +=1
       
 
     def tractarEsdeveniment(self, event):
@@ -76,6 +78,9 @@ class Source:
 
     def name(self):
         return "Generador"
+    
+    def summary(self):
+        print('Entitats arribades al sistema: ',self.entitats_creades) 
 
     def changeState(self):
         self.state = (self.state + 1) % 2

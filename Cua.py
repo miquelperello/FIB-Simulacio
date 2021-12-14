@@ -79,18 +79,23 @@ class Cua:
             
             if((len(self.cua))!=0):
                 event.entitat.temps_sortida_mostrador = event.tid
+                temps_passatger_CUA_SORTIDA = event.entitat.temps_sortida_mostrador - event.entitat.temps_entrada_cua
+                self.scheduler.temps_mitja_CUA_SORTIDA = (self.scheduler.temps_mitja_CUA_SORTIDA + temps_passatger_CUA_SORTIDA)/2
+                
+                temps_passatger_MOSTRADOR = event.entitat.temps_sortida_mostrador - event.entitat.temps_entrada_mostrador
+                self.scheduler.temps_mitja_MOSTRADOR = (self.scheduler.temps_mitja_MOSTRADOR + temps_passatger_MOSTRADOR)/2
                 
                 #TO-DO Enviem a gent que encara no està a la cua
                 mostrador_lliure = self.eliminaMostradorLliure(event)
                 event.entitat.mostrador_assignat = mostrador_lliure
                 self.RecuperaPassatgerCua(event)
-                print("###Resultats passatger: ", event.entitat.temps_entrada_cua, " ", event.entitat.temps_entrada_mostrador, " ", event.entitat.temps_sortida_mostrador)
+                #print("###Resultats passatger: ", event.entitat.temps_entrada_cua, " ", event.entitat.temps_entrada_mostrador, " ", event.entitat.temps_sortida_mostrador)
     
             #Sino, cua buida, canviem estat
             else:  
                 self.state = State.INACTIVE
                 event.entitat.temps_sortida_mostrador = event.tid
-                print("###Resultats passatger: ", event.entitat.temps_entrada_cua, " ", event.entitat.temps_entrada_mostrador, " ", event.entitat.temps_sortida_mostrador)
+                #print("###Resultats passatger: ", event.entitat.temps_entrada_cua, " ", event.entitat.temps_entrada_mostrador, " ", event.entitat.temps_sortida_mostrador)
             
             
            
