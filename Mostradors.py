@@ -96,7 +96,6 @@ class Mostradors:
             #self.LlistaMostradorsLliures.remove(event.entitat)
             #Posem estat a ocupat
             #self.LlistaMostradorsLliures[event.entitat].estat = State.OCCUPIED
-            #print("SACACACA", event.entitat)
             #for item in range(0, len(self.LlistaMostradorsLliures)):
 	            #if (self.LlistaMostradorsLliures[item] == event.entitat):
                         #print("does it work?")
@@ -109,15 +108,18 @@ class Mostradors:
             
             #print(self.LlistaMostradorsLliures[0].estat)
 
+           
+    
+            
             event.entitat.estat = State.PROCESSING
             event.entitat.temps_entrada_mostrador = event.tid
 
-
+        
 
             tempsFacturacio = 1000
-            for i in range(0, event.entitat.maleta):
+            #for i in range(0, event.entitat.maleta):
                 #TO-DO Posar distribució
-                tempsFacturacio+= 30
+                #tempsFacturacio+= 30
 
 
 
