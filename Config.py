@@ -6,6 +6,8 @@ from tkinter import messagebox
 from Mostradors import *
 from datetime import *
 from tkinter import ttk
+from GUI import *
+
 
 class Config:
 
@@ -16,10 +18,9 @@ class Config:
     passatgers = "None"
     veuretraza = "None"
 
-
     def __init__(self):
-        self.state="inactiu"
-        
+        self.state = "inactiu"
+
     def get_mostradors1():
         mostradors1 = ENTRY2.get()
         Config.mostradors1 = mostradors1
@@ -35,6 +36,7 @@ class Config:
     def get_passatgers():
         passatgers = ENTRY5.get()
         Config.passatgers = passatgers
+
     def get_veuretraza():
         veuretraza = comboExample.get()
         if (veuretraza == "Sí"):
@@ -42,7 +44,8 @@ class Config:
         elif (veuretraza == "No"):
             Config.veuretraza = 0
         else:
-             messagebox.showinfo("Result", "Please enter valid data!")
+            messagebox.showinfo("Result", "Please enter valid data!")
+
     def get_all():
         Config.get_mostradors1()
         Config.get_mostradors2()
@@ -59,7 +62,7 @@ class Config:
         TOP.title("Simulador de Mida")
         TOP.resizable(width=True, height=True)
         bg = PhotoImage(file="airplane.gif")
-       
+
         # the following alters the Listbox
 
         ebg = '#382343'
@@ -69,52 +72,53 @@ class Config:
         TOP.option_add('*TCombobox*Listbox*selectBackground', fg)
         TOP.option_add('*TCombobox*Listbox*selectForeground', ebg)
 
-
-
-        my_canvas=Canvas(TOP)
+        my_canvas = Canvas(TOP)
         my_canvas.pack(fill="both", expand=True)
         my_canvas.create_image(300, 250, image=bg)
-        LABEL = Label(TOP, bg="#382343",fg="#ffffff", text="Benvingut a la facturació de la maleta", font=("Helvetica", 15, "bold"), pady=10)
+        LABEL = Label(TOP, bg="#382343", fg="#ffffff", text="Benvingut a la facturació de la maleta", font=(
+            "Helvetica", 15, "bold"), pady=10)
         LABEL.place(x=75, y=0)
 
-        LABEL2 = Label(TOP, bg="#382343",fg="#ffffff", text="Quants treballadors vols disponibles al primer torn? \n 02:00 - 12:00 ", bd=6,font=("Helvetica", 10, "bold"), pady=5)
+        LABEL2 = Label(TOP, bg="#382343", fg="#ffffff", text="Quants treballadors vols disponibles al primer torn? \n 02:00 - 12:00 ",
+                       bd=6, font=("Helvetica", 10, "bold"), pady=5)
         LABEL2.place(x=75, y=61)
         ENTRY2 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         ENTRY2.place(x=425, y=61)
 
-        LABEL3 = Label(TOP, bg="#382343",fg="#ffffff", text="Quants treballadors vols disponibles al segon torn? \n 12:00 - 18:00 ", bd=6,font=("Helvetica", 10, "bold"), pady=5)
+        LABEL3 = Label(TOP, bg="#382343", fg="#ffffff", text="Quants treballadors vols disponibles al segon torn? \n 12:00 - 18:00 ",
+                       bd=6, font=("Helvetica", 10, "bold"), pady=5)
         LABEL3.place(x=75, y=121)
         ENTRY3 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         ENTRY3.place(x=425, y=121)
 
-        LABEL4 = Label(TOP, bg="#382343",fg="#ffffff", text="Quants treballadors vols disponibles al tercer torn? \n 18:00 - 22:30 ", bd=6,font=("Helvetica", 10, "bold"), pady=5)
+        LABEL4 = Label(TOP, bg="#382343", fg="#ffffff", text="Quants treballadors vols disponibles al tercer torn? \n 18:00 - 22:30 ",
+                       bd=6, font=("Helvetica", 10, "bold"), pady=5)
         LABEL4.place(x=75, y=181)
         ENTRY4 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         ENTRY4.place(x=425, y=181)
 
-
-        LABEL5 = Label(TOP, bg="#382343",fg="#ffffff", text="Quants passatgers? ", bd=6,font=("Helvetica", 10, "bold"), pady=5)
+        LABEL5 = Label(TOP, bg="#382343", fg="#ffffff", text="Quants passatgers? ", bd=6, font=(
+            "Helvetica", 10, "bold"), pady=5)
         LABEL5.place(x=75, y=241)
         ENTRY5 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         ENTRY5.place(x=425, y=241)
-        
-        LABEL6 = Label(TOP, bg="#382343",fg="#ffffff", text="Vols veure traza? 1 Sí, 0 No ", bd=6,font=("Helvetica", 10, "bold"), pady=5)
+
+        LABEL6 = Label(TOP, bg="#382343", fg="#ffffff", text="Vols veure traza? 1 Sí, 0 No ", bd=6, font=(
+            "Helvetica", 10, "bold"), pady=5)
         LABEL6.place(x=75, y=301)
         ENTRY6 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         #ENTRY6.place(x=425, y=301)
 
-
-        
-
-        comboExample = ttk.Combobox(TOP, 
+        comboExample = ttk.Combobox(TOP,
                                     values=[
-                                            "Sí", 
-                                            "No",
-                            ])
+                                        "Sí",
+                                        "No",
+                                    ])
 
         comboExample.place(x=360, y=301)
 
-        BUTTON = Button(bg="#382343",fg='#ffffff', bd=12, text="Començar",command = Config.get_all, padx=33, pady=10,font=("Helvetica", 20, "bold"))
+        BUTTON = Button(bg="#382343", fg='#ffffff', bd=12, text="Començar",
+                        command=Config.get_all, padx=33, pady=10, font=("Helvetica", 20, "bold"))
         #BUTTON.grid(row=5, column=0, sticky=W)
         BUTTON.place(x=75, y=400)
         TOP.mainloop()
@@ -127,14 +131,13 @@ class Config:
         except ValueError:
             messagebox.showinfo("Result", "Please enter valid data!")
         print("\n")
-        
-
-####Resultats passatger:  11641   34081   35111
 
 
+# Resultats passatger:  11641   34081   35111
 
-    def returnMostradors(self,tid):
-        #Segons el temps retornem el num de Mostradors disponibles
+
+    def returnMostradors(self, tid):
+        # Segons el temps retornem el num de Mostradors disponibles
         temps1 = datetime.strptime("01/01/21 10:00", "%d/%m/%y %H:%M")
         temps2 = datetime.strptime("01/01/21 18:00", "%d/%m/%y %H:%M")
         temps3 = datetime.strptime("01/01/21 22:30", "%d/%m/%y %H:%M")
@@ -146,14 +149,12 @@ class Config:
             return 6
         return 4
 
-
     def printTreballadors(self, num):
         global treballadors
         self.treballadors = num
         print("inside print" + str(self.treballadors))
         return self.treballadors
-    
-    
+
     def printMostradors(self):
         global mostradors
         print("inside print" + str(self.mostradors))

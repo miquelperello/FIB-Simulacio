@@ -1,26 +1,23 @@
-from auxiliar import * 
+from auxiliar import *
+
 
 class Event:
-    tipus=""
-    implicat=""
-    temps=""
-    entitat=""
+    tipus = ""
+    implicat = ""
+    temps = ""
+    entitat = ""
 
+    def __init__(self, implicat, temps, tipus, entitat=None, fra=None):
 
-
-    def __init__(self,implicat,temps,tipus,entitat=None,fra=None):
-        
-        self.entitatsTractades=0
-        self.type=tipus
-        self.objekt=implicat
-        self.tid=temps
-        self.entitat=entitat
-        self.fra=fra
-
+        self.entitatsTractades = 0
+        self.type = tipus
+        self.objekt = implicat
+        self.tid = temps
+        self.entitat = entitat
+        self.fra = fra
 
     def tractarEsdeveniment(self, temps, tipus, entitat):
         print("hello")
-
 
     def __repr__(self):
         return str(self.tid)+' '+str(self.type)

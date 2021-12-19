@@ -1,30 +1,33 @@
 from enum import Enum
 
+
 class State(Enum):
     SERVICE = 1
     INACTIVE = 2
-    ACTIVE  = 3
+    ACTIVE = 3
     BUSY = 4
     OCCUPIED = 5
     WAITING = 6
     READY = 7
     PROCESSING = 8
 
+
 class EventType(Enum):
-    ENTRA_A_CUA=1
-    PASSATGER_A_MOSTRADOR=2
-    PASSATGER_SURT_MOSTRADOR=3
-    MOSTRADOR_INICIALITZAT=4
-    MOSTRADOR_LLIURE=5
-    MOSTRADOR_OCUPAT=6
-    CANVI_DE_TORN=7
-    SimulationStart=8
+    ENTRA_A_CUA = 1
+    PASSATGER_A_MOSTRADOR = 2
+    PASSATGER_SURT_MOSTRADOR = 3
+    MOSTRADOR_INICIALITZAT = 4
+    MOSTRADOR_LLIURE = 5
+    MOSTRADOR_OCUPAT = 6
+    CANVI_DE_TORN = 7
+    SimulationStart = 8
+
 
 class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
-    OKRARO= '\033[97m'
+    OKRARO = '\033[97m'
     OKGREEN = '\033[92m'
     OKRANDOM = '\033[99m'
     WARNING = '\033[93m'
