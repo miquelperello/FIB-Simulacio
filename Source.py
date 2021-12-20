@@ -25,7 +25,6 @@ class Source:
         self.cua = cua
         self.mostrador = mostrador
         self.entitats_creades = 0
-        # self.scheduler = Scheduler()
 
     # generacioPassatgers
 
@@ -34,12 +33,9 @@ class Source:
         self.ProgramarSeguentArribada()
 
     # Seguent arribada
-
     def ProgramarSeguentArribada(self):
-
         # Definim tants mostradors com definit a config.
         for i in range(0, max(int(self.config.mostradors1), int(self.config.mostradors2), int(self.config.mostradors3))):
-            print("1")
             mostrador = Mostradors()
             mostradorInicialitzat = Event(
                 self.mostrador, 0, EventType.MOSTRADOR_INICIALITZAT, mostrador)
@@ -67,12 +63,15 @@ class Source:
         tempsEntrePersones = 0
 
         # creem tants passatgers com definit a config i li assignem un temps d'arribada
+        # A self.bins[x] trobem l'hora d'arribada i a self.n[x] el nombre de passatgers que arriben a aquella hora.
         comptador = 0
         for i in self.bins:
             tempsEntrePersones = 0
             for j in range(0, int(self.n[comptador])):
                 passatger = Passatger()
+                # Definim un interval de 10 segons entre les persones
                 tempsEntrePersones += 10
+                # A la variable <<i>> trobem la hora d'arribada. Li restem 2 ja que definim el moment 0 com les 2:00h del matí.
                 tempsEntreArribades += int((i-2)*3600)
                 tempsEntreArribades += tempsEntrePersones
                 tempsEntreArribades = tempsEntreArribades
@@ -86,29 +85,17 @@ class Source:
 
         # Creem un esdeveniment de tancament d'aeroport
         Tancament = Event(self.mostrador, 80000,
-                          '0', None)
+                          EventType.SimulationEnd, None)
         self.scheduler.afegirEsdeveniment(Tancament)
-
-    def tractarEsdeveniment(self, event):
-        print("event")
 
     def afegirCua(self, passatger):
         self.cua.cua.append(passatger)
 
-    def nextArrival(self):
-        global index
-        self.index += 1
-
-    def name(self):
-        return "Generador"
-
     def summary(self):
         print('Entitats arribades al sistema: ', self.entitats_creades)
 
-    def changeState(self):
-        self.state = (self.state + 1) % 2
-
     def GenerateDistribution(self):
+        # Definim distribució explicada a la memòria
         X1 = gfg = np.random.triangular(
             2, 10, 16, int(int(self.config.passatgers) / 2))
         X2 = gfg = np.random.triangular(

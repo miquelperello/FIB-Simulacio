@@ -2,7 +2,6 @@ import bisect
 from Event import *
 from Source import *
 from Config import *
-from GUI import runGUI, CustomWidget
 
 
 class Scheduler:
@@ -24,13 +23,13 @@ class Scheduler:
         self.afegirEsdeveniment(self.simulationStart)
 
     def run(self):
-        # configurar el model per consola, arxiu de text...
+        # configurar el model per consola
         self.crearModel()
         self.Config.configurarModel()
 
         # rellotge de simulacio a 0
         self.currentTime = 0
-        # bucle de simulació (condició fi simulació llista buida)
+        # bucle de simulació (condició fi simulació: fi jornada)
         while self.currentTime < 78000:
             # recuperem event simulacio
             if ((len(self.eventList) != 0)):
@@ -43,7 +42,6 @@ class Scheduler:
             self.currentTime = event.tid
         # recollida d'estadistics
         self.recollirEstadistics()
-        # self.recollirEstadistics()
 
     def trace(self, event):
 
@@ -62,7 +60,9 @@ class Scheduler:
         elif event.type == EventType.SimulationStart:
             color = Colors.OKRARO
         elif event.type == EventType.CANVI_DE_TORN:
-            color = Colors.OKRANDOM
+            color = Colors.WARNING
+        elif event.type == EventType.SimulationEnd:
+            color = Colors.FAIL
 
         if (self.Config.veuretraza == 0):
             return
@@ -79,14 +79,10 @@ class Scheduler:
 
     def crearModel(self):
         self.Config = Config()
-
         self.mostradors = Mostradors()
         self.Cua = Cua(self, self.mostradors)
         self.source = Source(self, self.Config, self.Cua, self.mostradors)
-        # TO-DO Refactor
         self.mostradors.connecta(self.Cua, self.Config, self)
-
-        # self.mostradors.inicialitzaMostradors(self.Config)
 
     def returnLlistaEsdeveniments(self):
         global eventList
@@ -97,9 +93,6 @@ class Scheduler:
         if (event.type == EventType.SimulationStart):
             # comunicar a tots els objectes que cal preparar-se
             self.inicialitzaesdeveniments()
-
-        elif (event.type == "ENTRA_A_CUA"):
-            self.Cua.AfegirPassatgersCua(event.temps, self.eventList)
 
     def summary(self):
 

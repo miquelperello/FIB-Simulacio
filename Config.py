@@ -1,16 +1,12 @@
-
-
-import Scheduler
 from tkinter import *
 from tkinter import messagebox
 from Mostradors import *
 from datetime import *
 from tkinter import ttk
-from GUI import *
 
 
 class Config:
-
+    mostradors = "None"
     mostradors1 = "None"
     mostradors2 = "None"
     mostradors3 = "None"
@@ -24,6 +20,7 @@ class Config:
     def get_mostradors1():
         mostradors1 = ENTRY2.get()
         Config.mostradors1 = mostradors1
+        Config.mostradors = mostradors1
 
     def get_mostradors2():
         mostradors2 = ENTRY3.get()

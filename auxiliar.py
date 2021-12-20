@@ -21,6 +21,7 @@ class EventType(Enum):
     MOSTRADOR_OCUPAT = 6
     CANVI_DE_TORN = 7
     SimulationStart = 8
+    SimulationEnd = 9
 
 
 class Colors:

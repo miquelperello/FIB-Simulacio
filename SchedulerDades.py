@@ -3,7 +3,6 @@ import os
 from Event import *
 from Source import *
 from ConfigDades import *
-from GUI import runGUI, CustomWidget
 import csv
 import os.path
 
@@ -34,7 +33,7 @@ class Scheduler:
 
         # rellotge de simulacio a 0
         self.currentTime = 0
-        # bucle de simulació (condició fi simulació llista buida)
+        # bucle de simulació (condició fi simulació: fi jornada)
         while self.currentTime < 78000:
            # recuperem event simulacio
             if ((len(self.eventList) != 0)):
@@ -63,10 +62,10 @@ class Scheduler:
             self.pa_surt_mostra += 1
         elif event.type == EventType.MOSTRADOR_INICIALITZAT:
             color = Colors.OKCYAN
-        elif event.type == EventType.SimulationStart:
-            color = Colors.OKRARO
         elif event.type == EventType.CANVI_DE_TORN:
-            color = Colors.OKRANDOM
+            color = Colors.WARNING
+        elif event.type == EventType.SimulationEnd:
+            color = Colors.FAIL
 
         if (self.Config.veuretraza == 0):
             return
@@ -102,9 +101,6 @@ class Scheduler:
             # comunicar a tots els objectes que cal preparar-se
             self.inicialitzaesdeveniments()
 
-        elif (event.type == "ENTRA_A_CUA"):
-            self.Cua.AfegirPassatgersCua(event.temps, self.eventList)
-
     def summary(self):
 
         print('Entitats entrades a la cua: ', self.pa_cua)
@@ -122,6 +118,10 @@ class Scheduler:
 
         if (self.Config.csv):
             dades_csv = []
+            dades_csv.append(int(self.Config.mostradors1))
+            dades_csv.append(int(self.Config.mostradors2))
+            dades_csv.append(int(self.Config.mostradors3))
+            dades_csv.append(int(self.Config.passatgers))
             dades_csv.append(int(round(self.temps_mitja_CUA, 2)))
             dades_csv.append(int(round(self.temps_mitja_MOSTRADOR, 2)))
             dades_csv.append(int(round(self.temps_mitja_CUA_SORTIDA, 2)))
@@ -136,7 +136,8 @@ class Scheduler:
             file_exists = os.path.isfile(filename)
 
             with open(filename, 'a') as csvfile:
-                headers = ['TempsCua', 'TempsMostrador',
+                headers = ['1rTorn', '2nTorn',
+                           '3rTorn', 'Passatgers', 'TempsCua', 'TempsMostrador',
                            'TempsCuaSortida', 'PerdAvio']
                 writer = csv.DictWriter(
                     csvfile, delimiter=',', lineterminator='\n', fieldnames=headers)
@@ -145,7 +146,7 @@ class Scheduler:
                     writer.writeheader()  # file doesn't exist yet, write a header
 
                 writer.writerow(
-                    {'TempsCua': dades_csv[0], 'TempsMostrador': dades_csv[1], 'TempsCuaSortida': dades_csv[2], 'PerdAvio': dades_csv[3]})
+                    {'1rTorn': dades_csv[0], '2nTorn': dades_csv[1], '3rTorn': dades_csv[2], 'Passatgers': dades_csv[3], 'TempsCua': dades_csv[4], 'TempsMostrador': dades_csv[5], 'TempsCuaSortida': dades_csv[6], 'PerdAvio': dades_csv[7]})
 
     def recollirEstadistics(self):
         print(Colors.HEADER, "ESTADÍSTICS", Colors.ENDC)

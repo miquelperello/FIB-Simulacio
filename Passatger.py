@@ -1,5 +1,6 @@
 from random import randint
 from auxiliar import *
+import numpy as np
 
 
 class Passatger:
@@ -17,7 +18,7 @@ class Passatger:
             self.id = randint(200, 80000)
             self.estat = State.ACTIVE
             # TO-DO
-            self.maleta = randint(0, 4)
+            self.maleta = int(np.random.triangular(0, 1, 4))
             self.documentacio = randint(0, 1)
             self.temps = 0
             self.mostrador_assignat = -1

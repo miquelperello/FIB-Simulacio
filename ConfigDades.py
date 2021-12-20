@@ -8,7 +8,7 @@ import argparse
 
 
 class ConfigDades:
-
+    mostradors = "None"
     mostradors1 = "None"
     mostradors2 = "None"
     mostradors3 = "None"
@@ -59,6 +59,7 @@ class ConfigDades:
 
         args = parser.parse_args()
         if args.mostrador1:
+            ConfigDades.mostradors = args.mostrador1
             ConfigDades.mostradors1 = args.mostrador1
             ConfigDades.mostradors2 = args.mostrador2
             ConfigDades.mostradors3 = args.mostrador3

@@ -16,9 +16,6 @@ class Event:
         self.entitat = entitat
         self.fra = fra
 
-    def tractarEsdeveniment(self, temps, tipus, entitat):
-        print("hello")
-
     def __repr__(self):
         return str(self.tid)+' '+str(self.type)
 
