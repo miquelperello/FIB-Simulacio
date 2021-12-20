@@ -16,6 +16,7 @@ class Scheduler:
     temps_mitja_CUA = 0
     temps_mitja_CUA_SORTIDA = 0
     temps_mitja_MOSTRADOR = 0
+    pa_han_perdut_avio = 0
 
     def __init__(self):
         # creació dels objectes que composen el meu model
@@ -45,30 +46,27 @@ class Scheduler:
         # self.recollirEstadistics()
 
     def trace(self, event):
+
+        color = Colors.HEADER
+        if event.type == EventType.ENTRA_A_CUA:
+            color = Colors.OKBLUE
+            self.pa_cua += 1
+        elif event.type == EventType.PASSATGER_A_MOSTRADOR:
+            color = Colors.HEADER
+            self.pa_mostra += 1
+        elif event.type == EventType.PASSATGER_SURT_MOSTRADOR:
+            color = Colors.OKGREEN
+            self.pa_surt_mostra += 1
+        elif event.type == EventType.MOSTRADOR_INICIALITZAT:
+            color = Colors.OKCYAN
+        elif event.type == EventType.SimulationStart:
+            color = Colors.OKRARO
+        elif event.type == EventType.CANVI_DE_TORN:
+            color = Colors.OKRANDOM
+
         if (self.Config.veuretraza == 0):
             return
         elif (self.Config.veuretraza == 1):
-            color = Colors.HEADER
-            if event.type == EventType.ENTRA_A_CUA:
-                color = Colors.OKBLUE
-
-                self.pa_cua += 1
-            elif event.type == EventType.PASSATGER_A_MOSTRADOR:
-                color = Colors.HEADER
-
-                self.pa_mostra += 1
-            elif event.type == EventType.PASSATGER_SURT_MOSTRADOR:
-                color = Colors.OKGREEN
-                self.pa_surt_mostra += 1
-
-            elif event.type == EventType.MOSTRADOR_INICIALITZAT:
-                color = Colors.OKCYAN
-            elif event.type == EventType.SimulationStart:
-
-                color = Colors.OKRARO
-            elif event.type == EventType.CANVI_DE_TORN:
-                color = Colors.OKRANDOM
-
             print(color, event.tid, event.type, ' ', event.objekt, Colors.ENDC)
 
     def inicialitzaesdeveniments(self):
@@ -115,6 +113,8 @@ class Scheduler:
               "s. ", round(self.temps_mitja_MOSTRADOR/60, 2), "min.", round(self.temps_mitja_MOSTRADOR/3600, 2), "h.")
         print('Temps mitjà total: ', round(self.temps_mitja_CUA_SORTIDA, 2),
               "s. ", round(self.temps_mitja_CUA_SORTIDA/60, 2), "min.", round(self.temps_mitja_CUA_SORTIDA/3600, 2), "h.")
+
+        print('Passatgers que han perdut l\'avió: ', self.pa_han_perdut_avio)
 
     def recollirEstadistics(self):
         print(Colors.HEADER, "ESTADÍSTICS", Colors.ENDC)

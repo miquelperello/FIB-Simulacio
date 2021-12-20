@@ -134,28 +134,3 @@ class Config:
 
 
 # Resultats passatger:  11641   34081   35111
-
-
-    def returnMostradors(self, tid):
-        # Segons el temps retornem el num de Mostradors disponibles
-        temps1 = datetime.strptime("01/01/21 10:00", "%d/%m/%y %H:%M")
-        temps2 = datetime.strptime("01/01/21 18:00", "%d/%m/%y %H:%M")
-        temps3 = datetime.strptime("01/01/21 22:30", "%d/%m/%y %H:%M")
-
-        tempsInicial = datetime.strptime("01/01/21 02:00", "%d/%m/%y %H:%M")
-        tempsFinal = tempsInicial + datetime(tid)
-
-        if(((tempsFinal < temps1) or ((tempsFinal > temps2) and (tempsFinal < temps3)))):
-            return 6
-        return 4
-
-    def printTreballadors(self, num):
-        global treballadors
-        self.treballadors = num
-        print("inside print" + str(self.treballadors))
-        return self.treballadors
-
-    def printMostradors(self):
-        global mostradors
-        print("inside print" + str(self.mostradors))
-        return self.mostradors

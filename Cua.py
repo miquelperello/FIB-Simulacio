@@ -96,6 +96,10 @@ class Cua:
             else:
                 self.scheduler.temps_mitja_MOSTRADOR = temps_passatger_MOSTRADOR
 
+            if (temps_passatger_CUA_SORTIDA > 7200):
+                event.entitat.perd_avio = 1
+                self.scheduler.pa_han_perdut_avio += 1
+
             if((len(self.cua)) != 0):
 
                 mostrador_lliure = self.eliminaMostradorLliure(event)

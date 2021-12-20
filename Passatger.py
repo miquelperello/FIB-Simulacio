@@ -8,6 +8,7 @@ class Passatger:
     documentacio = ""
     temps = ""
     mostrador_assignat = ""
+    perd_avio = ""
 
     def __init__(self, temps=None):
 
@@ -15,10 +16,12 @@ class Passatger:
         if (temps == None):
             self.id = randint(200, 80000)
             self.estat = State.ACTIVE
+            # TO-DO
             self.maleta = randint(0, 4)
             self.documentacio = randint(0, 1)
             self.temps = 0
             self.mostrador_assignat = -1
+            self.perd_avio = 0
 
             self.temps_entrada_cua = 0
             self.temps_entrada_mostrador = 0
@@ -34,3 +37,4 @@ class Passatger:
             self.temps_entrada_cua = 0
             self.temps_entrada_mostrador = 0
             self.temps_sortida_mostrador = 0
+            self.perd_avio = 0
