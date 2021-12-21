@@ -10,6 +10,7 @@ class State(Enum):
     WAITING = 6
     READY = 7
     PROCESSING = 8
+    
 
 
 class EventType(Enum):
@@ -22,6 +23,7 @@ class EventType(Enum):
     CANVI_DE_TORN = 7
     SimulationStart = 8
     SimulationEnd = 9
+    NOVA_ARRIBADA = 10
 
 
 class Colors:

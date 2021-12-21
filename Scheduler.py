@@ -63,6 +63,8 @@ class Scheduler:
             color = Colors.WARNING
         elif event.type == EventType.SimulationEnd:
             color = Colors.FAIL
+        elif event.type == EventType.NOVA_ARRIBADA:
+            color = Colors.HEADER
 
         if (self.Config.veuretraza == 0):
             return

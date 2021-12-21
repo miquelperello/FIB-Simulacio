@@ -64,29 +64,52 @@ class Source:
 
         # creem tants passatgers com definit a config i li assignem un temps d'arribada
         # A self.bins[x] trobem l'hora d'arribada i a self.n[x] el nombre de passatgers que arriben a aquella hora.
-        comptador = 0
-        for i in self.bins:
-            tempsEntrePersones = 0
-            for j in range(0, int(self.n[comptador])):
-                passatger = Passatger()
-                # Definim un interval de 10 segons entre les persones
-                tempsEntrePersones += 10
-                # A la variable <<i>> trobem la hora d'arribada. Li restem 2 ja que definim el moment 0 com les 2:00h del matí.
-                tempsEntreArribades += int((i-2)*3600)
-                tempsEntreArribades += tempsEntrePersones
-                tempsEntreArribades = tempsEntreArribades
-                passatger.temps_entrada_cua = tempsEntreArribades
-                novaArribada = Event(self.cua, tempsEntreArribades,
-                                     EventType.ENTRA_A_CUA, passatger)
-                self.scheduler.afegirEsdeveniment(novaArribada)
-                self.entitats_creades += 1
-                tempsEntreArribades = 0
-            comptador += 1
-
+       
+        
+        
+        # Creem esdeveniments de creació de passatgers
+        for i in range(0, len(self.bins)):
+            EventNovaArribada = Event(self, int((self.bins[i]-2)*3600),
+                                EventType.NOVA_ARRIBADA, i)
+            self.scheduler.afegirEsdeveniment(EventNovaArribada)
+           
+            
         # Creem un esdeveniment de tancament d'aeroport
         Tancament = Event(self.mostrador, 80000,
                           EventType.SimulationEnd, None)
         self.scheduler.afegirEsdeveniment(Tancament)
+        
+        
+    
+
+       
+       
+        
+    def ProgramaNovesArribades(self, comptador):
+                tempsEntrePersones = 0
+                tempsEntreArribades = 0
+                for j in range(0, int(self.n[comptador])):
+                    passatger = Passatger()
+                    # Definim un interval de 10 segons entre les persones
+                    tempsEntrePersones += 10
+                    # A la variable <<i>> trobem la hora d'arribada. Li restem 2 ja que definim el moment 0 com les 2:00h del matí.
+                    tempsEntreArribades += int((self.bins[comptador]-2)*3600)
+                    tempsEntreArribades += tempsEntrePersones
+                    tempsEntreArribades = tempsEntreArribades
+                    passatger.temps_entrada_cua = tempsEntreArribades
+                    novaArribada = Event(self.cua, tempsEntreArribades,
+                                        EventType.ENTRA_A_CUA, passatger)
+                    self.scheduler.afegirEsdeveniment(novaArribada)
+                    self.entitats_creades += 1
+                    tempsEntreArribades = 0
+                comptador += 1
+            
+    
+    def tractarEsdeveniment(self, event):
+        
+        if (event.type==EventType.NOVA_ARRIBADA):
+            self.ProgramaNovesArribades(event.entitat)
+        
 
     def afegirCua(self, passatger):
         self.cua.cua.append(passatger)
