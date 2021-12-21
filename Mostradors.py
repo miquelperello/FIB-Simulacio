@@ -67,7 +67,7 @@ class Mostradors:
                 tempsFacturacio += np.random.triangular(60, 60, 300)
 
             # Creem l'esdeveniment passatger
-            eventPassatger = Event(self.cua, event.tid + tempsFacturacio,
+            eventPassatger = Event(self.cua, event.tid + int(tempsFacturacio),
                                    EventType.PASSATGER_SURT_MOSTRADOR, event.entitat)
             self.scheduler.afegirEsdeveniment(eventPassatger)
 
