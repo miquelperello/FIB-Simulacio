@@ -1,4 +1,5 @@
 
+from tkinter.constants import S
 from Passatger import *
 from Mostradors import *
 from Event import *
@@ -13,7 +14,7 @@ class Cua:
         cua = []
         self.mostradors = mostradors
         self.scheduler = scheduler
-        self.state = State.INACTIVE
+        self.state = State.ACTIVE
 
     def mostradorslliures(self):
         return self.mostradors.return_mostradors_lliures()
@@ -30,12 +31,12 @@ class Cua:
     # El primer passatger que estava fent cua, ara pot anar al mostrador
     def RecuperaPassatgerCua(self, event, mostrador_lliure):
         """"
-        Agafa al primer passatger a la cua, i l'envia al mostradr
+        Agafa al primer passatger a la cua, i l'envia al mostrador
         :event: l'event de Sortida del Mostrador.
         """
         # Seleccionem el primer passatger de la cua
         _passatger = self.cua.pop(0)
-
+        # Li assignem el mostrador lliure
         _passatger.mostrador_assignat = mostrador_lliure
         # Creem Event amb temps sortida cua anterior + temps cua passatger
         novaArribada = Event(self.mostradors, event.tid+_passatger.temps,
@@ -69,6 +70,10 @@ class Cua:
 
         # Si el passatger surt del mostrador, s'afegeix un mostrador lliure i s'afegeix al primer passatger
         elif(event.type == EventType.PASSATGER_SURT_MOSTRADOR):
+            # Definim estat a inactiu
+            event.entitat.estat = State.INACTIVE
+
+            # Definim el mostrador tractat com a lliure
             self.afegeixMostradorLliure(event)
 
             # Estadístics
@@ -97,6 +102,7 @@ class Cua:
                 event.entitat.perd_avio = 1
                 self.scheduler.pa_han_perdut_avio += 1
             # Si encara queden passatgers a la cua, enviem al primer de la cua a un mostrador lliure
+            # Definim el mostradorslliures() ja que, tot i acabar d'alliberar un mostrador, és possible que sigui fora d'horari (últim torn) i no hi hagi cap.
             if((len(self.cua)) > 0 and self.mostradorslliures()):
                 # Seleccionem el mostrador lliure, que l'acaba de deixar el passatger de l'event.
                 mostrador_lliure = self.eliminaMostradorLliure(event)

@@ -72,9 +72,11 @@ class Mostradors:
             self.scheduler.afegirEsdeveniment(eventPassatger)
 
         elif(event.type == EventType.CANVI_DE_TORN):
+            # Definim els mostradors disponibles segons el torn
             if(event.tid == 28800):
                 self.config.mostradors = self.config.mostradors2
             elif(event.tid == 57600):
                 self.config.mostradors = self.config.mostradors3
             elif(event.tid == 73800):
                 self.config.mostradors = 0
+                self.estat = State.INACTIVE
