@@ -34,6 +34,17 @@ class Source:
 
     # Seguent arribada
     def ProgramarSeguentArribada(self):
+
+        # Definim mostradors
+        self.inicialitzaMostradors()
+
+        # Definim canvis de torn i tancament d'aeroport
+        self.events_canvi_torn()
+
+        # Definim creació d'arribades
+        self.tempsEntreArribades()
+
+    def inicialitzaMostradors(self):
         # Definim tants mostradors com definit a config.
         for i in range(0, max(int(self.config.mostradors1), int(self.config.mostradors2), int(self.config.mostradors3))):
             mostrador = Mostradors()
@@ -41,6 +52,7 @@ class Source:
                 self.mostrador, 0, EventType.MOSTRADOR_INICIALITZAT, mostrador)
             self.scheduler.afegirEsdeveniment(mostradorInicialitzat)
 
+    def events_canvi_torn(self):
         # Creem esdeveniments de canvi de torn
         canvideTorn = Event(self.mostrador, 28800,
                             EventType.CANVI_DE_TORN, None)
@@ -56,7 +68,12 @@ class Source:
                             EventType.CANVI_DE_TORN, None)
         self.scheduler.afegirEsdeveniment(canvideTorn)
 
-        # Distribució
+        # Creem un esdeveniment de tancament d'aeroport
+        Tancament = Event(self.mostrador, 80000,
+                          EventType.SimulationEnd, None)
+        self.scheduler.afegirEsdeveniment(Tancament)
+
+    def tempsEntreArribades(self):
         # Definim temps entre arribades
 
         tempsEntreArribades = 0
@@ -67,11 +84,6 @@ class Source:
             EventNovaArribada = Event(self, int((self.bins[i]-2)*3600),
                                       EventType.NOVA_ARRIBADA, i)
             self.scheduler.afegirEsdeveniment(EventNovaArribada)
-
-        # Creem un esdeveniment de tancament d'aeroport
-        Tancament = Event(self.mostrador, 80000,
-                          EventType.SimulationEnd, None)
-        self.scheduler.afegirEsdeveniment(Tancament)
 
     def ProgramaNovesArribades(self, comptador):
         tempsEntrePersones = 0
