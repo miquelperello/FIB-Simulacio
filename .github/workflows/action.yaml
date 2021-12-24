@@ -17,10 +17,10 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Install dependencies
-        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+      - name: "Install dependencies"
         run: |
-          pipenv install --deploy --dev
+          pip3 install -r requirements.txt
+          
       - name: Run test suite
         run: |
-          pipenv run test -v
+         pytest test.py
