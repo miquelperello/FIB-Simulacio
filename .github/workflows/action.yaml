@@ -1,33 +1,26 @@
----
-name: CI
-
-on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["master"]
-  workflow_dispatch:
+# .github/workflows/app.yaml
+name: PyTest
+on: push
 
 jobs:
-  tests:
-    name: "Python ${{ matrix.python-version }}"
-    runs-on: "ubuntu-latest"
-    env:
-      USING_COVERAGE: '3.6,3.8'
-
-    strategy:
-      matrix:
-        python-version: [ "3.8"]
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v2"
-        with:
-          python-version: "${{ matrix.python-version }}"
-      - name: "Install dependencies"
-        run: |
-          pip3 install -r requirements.txt
-        
+      - name: Check out repository code
+        uses: actions/checkout@v2
 
-      - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python3 SchedulerDades.py -m1 8 -m2 6 -m3 8 -p 200 -t Sí -c Sí"
+      # Setup Python (faster than using Python container)
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: |
+          pipenv install --deploy --dev
+      - name: Run test suite
+        run: |
+          pipenv run test -v
