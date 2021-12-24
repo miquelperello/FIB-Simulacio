@@ -23,4 +23,4 @@ jobs:
           
       - name: Run test suite
         run: |
-         pytest test.py
+         pytest test_mostrador.py test_passatger.py
