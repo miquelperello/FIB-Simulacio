@@ -5,26 +5,6 @@ from auxiliar import *
 from Event import *
 
 
-@pytest.mark.parametrize(
-    "source_n, source_bins, expected",
-    [
-        ([20, 30, 40], [1, 2, 3], sum([20, 30, 40])),
-        ([99, 99, 99], [1, 2, 3], sum([99, 99, 99])),
-        ([0, 0, 1], [1, 2, 3], 1),
-        ([0, 0, 0], [1, 2, 3], 0)
-    ]
-)
-def test_creacio_passatgers(source_n, source_bins, expected):
-    scheduler = Scheduler()
-    source = Source(scheduler, None, None, None)
-    source.n = source_n
-    source.bins = source_bins
-    for i in range(0, len(source.n)):
-        source.ProgramaNovesArribades(i)
-
-    assert source.entitats_creades == expected
-
-
 def MostradorLliure():
     ml = Mostradors()
     ml.estat = State.ACTIVE
@@ -99,3 +79,26 @@ def test_tractaEvent_Mostrador(tid, mostradors, mostradors2, mostradors3, expect
     mEvent = Event(None, tid, EventType.CANVI_DE_TORN)
     mostradors.tractarEsdeveniment(mEvent)
     assert config.mostradors == expected
+
+
+@pytest.mark.parametrize(
+    "mostrador_assignat, LlistaMostradorsLliures, expected",
+    [
+
+        (0, [MostradorOcupat(), MostradorLliure(),
+             MostradorLliure()], State.ACTIVE),
+        (2, [MostradorOcupat(), MostradorOcupat(),
+             MostradorLliure()], State.ACTIVE),
+        (1, [MostradorLliure(), MostradorLliure(),
+             MostradorLliure()], State.ACTIVE),
+    ]
+)
+def test_afegeix_mostrador_lliure(mostrador_assignat, LlistaMostradorsLliures, expected):
+    mostradors = Mostradors()
+    mostradors.LlistaMostradorsLliures = LlistaMostradorsLliures
+    passatger = Passatger()
+    passatger.mostrador_assignat = 0
+    pe = Event(None, 0, None, passatger)
+    config = Config()
+    mostradors.afegeix_mostrador_lliure(pe)
+    assert mostradors.LlistaMostradorsLliures[mostrador_assignat].estat == expected

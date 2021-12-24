@@ -37,7 +37,7 @@ class Mostradors:
                 return item
                 break
 
-    def afegeix_mostrador(self, event):
+    def afegeix_mostrador_lliure(self, event):
         # Per l'event passat per paràmetre, on obtenim el passatger i el seu mostrador assignat, el deixem en ACTIVE.
         self.LlistaMostradorsLliures[int(
             event.entitat.mostrador_assignat)].estat = State.ACTIVE

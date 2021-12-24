@@ -23,7 +23,7 @@ class Cua:
         return self.mostradors.elimina_mostrador_lliure()
 
     def afegeixMostradorLliure(self, event):
-        self.mostradors.afegeix_mostrador(event)
+        self.mostradors.afegeix_mostrador_lliure(event)
 
     def eliminaPassatgerCua(self, entitat):
         self.cua.remove(entitat)
