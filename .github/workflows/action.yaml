@@ -20,7 +20,7 @@ jobs:
       - name: "Install dependencies"
         run: |
           pip3 install -r requirements.txt
-          
+
       - name: Run test suite
         run: |
-         pytest test_mostrador.py test_passatger.py
+          pytest test_mostrador.py test_mostrador.py
