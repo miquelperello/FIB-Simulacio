@@ -17,10 +17,10 @@ class Cua:
         self.state = State.ACTIVE
 
     def mostradorslliures(self):
-        return self.mostradors.return_mostradors_lliures()
+        return self.mostradors.return_mostrador_lliures()
 
-    def eliminaMostradorLliure(self, event):
-        return self.mostradors.elimina_mostrador(event)
+    def eliminaMostradorLliure(self):
+        return self.mostradors.elimina_mostrador_lliure()
 
     def afegeixMostradorLliure(self, event):
         self.mostradors.afegeix_mostrador(event)

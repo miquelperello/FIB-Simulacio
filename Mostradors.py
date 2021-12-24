@@ -21,14 +21,14 @@ class Mostradors:
         self.scheduler = scheduler
         self.config = config
 
-    def return_mostradors_lliures(self):
+    def return_mostrador_lliures(self):
         # Mirem pels Mostradors actuals disponibles, si hi ha algun amb estat ACTIVE
         for item in range(0, int(self.config.mostradors)):
             if (item != None and self.LlistaMostradorsLliures[item].estat == State.ACTIVE):
                 return 1
         return 0
 
-    def elimina_mostrador(self, event):
+    def elimina_mostrador_lliure(self):
         # Mirem pels Mostradors actuals disponibles, si hi ha algun amb estat ACTIVE, el deixem com a OCUPAT i el retornem
 
         for item in range(0, int(self.config.mostradors)):
