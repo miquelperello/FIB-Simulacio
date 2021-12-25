@@ -1,9 +1,6 @@
-
-
 import Scheduler
 from Mostradors import *
 from datetime import *
-import sys
 import argparse
 
 
@@ -72,9 +69,6 @@ class ConfigDades:
 
         else:
             print("# Comença la configuració")
-
-            #ConfigDades.mostradors = input("Quin número de mostradors vols estudiar? ")
-
             ConfigDades.mostradors1 = input(
                 f"Quants treballadors vols disponibles al primer torn? - 02:00 - 12:00\n")
             ConfigDades.mostradors2 = input(

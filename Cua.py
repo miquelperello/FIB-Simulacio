@@ -62,7 +62,7 @@ class Cua:
                 # L'eliminem de la cua
                 self.eliminaPassatgerCua(event.entitat)
                 # Li assignem un mostrador
-                mostrador_lliure = self.eliminaMostradorLliure(event)
+                mostrador_lliure = self.eliminaMostradorLliure()
                 # Assignem Mostrador a Passatger
                 event.entitat.mostrador_assignat = mostrador_lliure
                 # Afegim event

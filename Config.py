@@ -121,13 +121,7 @@ class Config:
         TOP.mainloop()
         Config.mostradors = Config.mostradors1
         try:
-            #Config.treballadors = Config.get_treballadors()
-            #Config.passatgers = str(Config.get_passatgers)
-            #Config.veuretraza = str(Config.get_veuretraza)
             a = 2
         except ValueError:
             messagebox.showinfo("Result", "Please enter valid data!")
         print("\n")
-
-
-# Resultats passatger:  11641   34081   35111

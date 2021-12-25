@@ -5,9 +5,6 @@ from auxiliar import *
 from Event import *
 from collections import Counter
 
-import sys
-sys.path.append('..')
-
 
 @pytest.mark.parametrize(
     "source_n, source_bins, expected",

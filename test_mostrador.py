@@ -1,8 +1,9 @@
-import pytest
 from Source import *
 from Scheduler import *
 from auxiliar import *
 from Event import *
+import pytest
+import sys
 
 
 def MostradorLliure():

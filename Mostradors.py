@@ -12,6 +12,7 @@ class Mostradors:
     def __init__(self):
         self.estat = State.ACTIVE
 
+    # TO-DO Ver si se uisa!
     def inicialitzaMostradors(self):
         for i in range(0, int(self.config.mostradors)):
             self.LlistaMostradorsLliures.append(i)
