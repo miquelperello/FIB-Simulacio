@@ -25,7 +25,7 @@ class Scheduler:
     def run(self):
         # configurar el model per consola
         self.crearModel()
-        self.Config.configurarModel()
+        self.config.configurarModel()
 
         # rellotge de simulacio a 0
         self.currentTime = 0
@@ -44,31 +44,26 @@ class Scheduler:
         self.recollirEstadistics()
 
     def trace(self, event):
-
-        color = Colors.HEADER
-        if event.type == EventType.ENTRA_A_CUA:
-            color = Colors.OKBLUE
-            self.pa_cua += 1
-        elif event.type == EventType.PASSATGER_A_MOSTRADOR:
-            color = Colors.HEADER
-            self.pa_mostra += 1
-        elif event.type == EventType.PASSATGER_SURT_MOSTRADOR:
-            color = Colors.OKGREEN
-            self.pa_surt_mostra += 1
-        elif event.type == EventType.MOSTRADOR_INICIALITZAT:
-            color = Colors.OKCYAN
-        elif event.type == EventType.SimulationStart:
-            color = Colors.OKRARO
-        elif event.type == EventType.CANVI_DE_TORN:
-            color = Colors.WARNING
-        elif event.type == EventType.SimulationEnd:
-            color = Colors.FAIL
-        elif event.type == EventType.NOVA_ARRIBADA:
-            color = Colors.HEADER
-
-        if (self.Config.veuretraza == 0):
+        if (self.config.veuretraza == 0):
             return
-        elif (self.Config.veuretraza == 1):
+        elif (self.config.veuretraza == 1):
+            color = Colors.HEADER
+            if event.type == EventType.ENTRA_A_CUA:
+                color = Colors.OKBLUE
+            elif event.type == EventType.PASSATGER_A_MOSTRADOR:
+                color = Colors.HEADER
+            elif event.type == EventType.PASSATGER_SURT_MOSTRADOR:
+                color = Colors.OKGREEN
+            elif event.type == EventType.MOSTRADOR_INICIALITZAT:
+                color = Colors.OKCYAN
+            elif event.type == EventType.SimulationStart:
+                color = Colors.ENDC
+            elif event.type == EventType.CANVI_DE_TORN:
+                color = Colors.WARNING
+            elif event.type == EventType.SimulationEnd:
+                color = Colors.FAIL
+            elif event.type == EventType.NOVA_ARRIBADA:
+                color = Colors.HEADER
             print(color, event.tid, event.type, ' ', event.objekt, Colors.ENDC)
 
     def inicialitzaesdeveniments(self):
@@ -80,11 +75,14 @@ class Scheduler:
         a = 10
 
     def crearModel(self):
-        self.Config = Config()
+        self.config = Config()
         self.mostradors = Mostradors()
-        self.Cua = Cua(self, self.mostradors)
-        self.source = Source(self, self.Config, self.Cua, self.mostradors)
-        self.mostradors.connecta(self.Cua, self.Config, self)
+        self.cua = Cua()
+        self.source = Source()
+
+        self.cua.connecta(self, self.mostradors)
+        self.source.connecta(self, self.config, self.cua, self.mostradors)
+        self.mostradors.connecta(self.cua, self.config, self)
 
     def returnLlistaEsdeveniments(self):
         global eventList

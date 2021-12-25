@@ -18,15 +18,15 @@ class Source:
     bins = []
     n = []
 
-    def __init__(self, scheduler, config, cua, mostrador):
+    def __init__(self):
         self.state = "inactiu"
+        self.entitats_creades = 0
+
+    def connecta(self, scheduler, config, cua, mostrador):
         self.scheduler = scheduler
         self.config = config
         self.cua = cua
         self.mostrador = mostrador
-        self.entitats_creades = 0
-
-    # generacioPassatgers
 
     def SimulationStart(self):
         self.GenerateDistribution()
@@ -81,9 +81,11 @@ class Source:
 
         # Creem esdeveniments de creació de passatgers
         for i in range(0, len(self.bins)):
-            EventNovaArribada = Event(self, int((self.bins[i]-2)*3600),
-                                      EventType.NOVA_ARRIBADA, i)
-            self.scheduler.afegirEsdeveniment(EventNovaArribada)
+            # Si en el torn hi ha passatgers
+            if (int(self.n[i]) > 0):
+                EventNovaArribada = Event(self, int((self.bins[i]-2)*3600),
+                                          EventType.NOVA_ARRIBADA, i)
+                self.scheduler.afegirEsdeveniment(EventNovaArribada)
 
     def ProgramaNovesArribades(self, comptador):
         tempsEntrePersones = 0
@@ -119,11 +121,19 @@ class Source:
 
     def GenerateDistribution(self):
         # Definim distribució explicada a la memòria
-        X1 = gfg = np.random.triangular(
-            2, 10, 16, int(int(self.config.passatgers) / 2))
-        X2 = gfg = np.random.triangular(
-            12, 17, 22, int(int(self.config.passatgers) / 2))
-        X = np.concatenate([X1, X2])
+        if (int((self.config.passatgers)) % 2) == 0:
+            X1 = gfg = np.random.triangular(
+                2, 10, 16, int(int(self.config.passatgers) / 2))
+            X2 = gfg = np.random.triangular(
+                12, 17, 22, int(int(self.config.passatgers) / 2))
+            X = np.concatenate([X1, X2])
+        else:
+            # Al ser imparell, posem 1 més a la part inicial del dia
+            X1 = gfg = np.random.triangular(
+                2, 10, 16, 1 + int(int(self.config.passatgers) / 2))
+            X2 = gfg = np.random.triangular(
+                12, 17, 22, int(int(self.config.passatgers) / 2))
+            X = np.concatenate([X1, X2])
 
         plt.figure(1)
         (n, bins, patches) = plt.hist(X)

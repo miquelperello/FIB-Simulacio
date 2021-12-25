@@ -17,13 +17,43 @@ from collections import Counter
 )
 def test_creacio_passatgers(source_n, source_bins, expected):
     scheduler = Scheduler()
-    source = Source(scheduler, None, None, None)
+    source = Source()
+    source.connecta(scheduler, None, None, None)
     source.n = source_n
     source.bins = source_bins
     for i in range(0, len(source.n)):
         source.ProgramaNovesArribades(i)
 
     assert source.entitats_creades == expected
+
+
+@pytest.mark.parametrize(
+    "passatgers, expected",
+    [
+        (150, 150),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (8, 8),
+        (9, 9),
+        (10, 10),
+        (10, 10),
+        (15, 15),
+        (16, 16),
+        (30, 30),
+        (20, 20),
+        (50, 50),
+
+    ]
+)
+def test_GenerateDistribution(passatgers, expected):
+    scheduler = Scheduler()
+    source = Source()
+    config = Config()
+    source.connecta(scheduler, config, None, None)
+    source.config.passatgers = passatgers
+    source.GenerateDistribution()
+    assert passatgers == sum(source.n)
 
 
 @pytest.mark.parametrize(
@@ -37,8 +67,10 @@ def test_creacio_passatgers(source_n, source_bins, expected):
 )
 def test_inicialitzaMostradors(m1, m2, m3, expected):
     scheduler = Scheduler()
-    source = Source(scheduler, None, None, None)
+    source = Source()
     config = Config()
+    source.connecta(scheduler, config, None, None)
+
     config.mostradors1 = m1
     config.mostradors2 = m2
     config.mostradors3 = m3

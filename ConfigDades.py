@@ -9,8 +9,6 @@ class ConfigDades:
     mostradors1 = "None"
     mostradors2 = "None"
     mostradors3 = "None"
-
-    treballadors = "None"
     passatgers = "None"
     veuretraza = "None"
     csv = "None"
@@ -55,29 +53,30 @@ class ConfigDades:
         global mostradors, treballadors, passatgers
 
         args = parser.parse_args()
-        if args.mostrador1:
+        if (args.mostrador1 != None):
             ConfigDades.mostradors = args.mostrador1
             ConfigDades.mostradors1 = args.mostrador1
             ConfigDades.mostradors2 = args.mostrador2
             ConfigDades.mostradors3 = args.mostrador3
 
             ConfigDades.passatgers = args.passatgers
-            if(args.traza == "Si"):
-                ConfigDades.veuretraza = "Sí"
-            if(args.csv == "Si"):
-                ConfigDades.csv = "Sí"
+            ConfigDades.veuretraza = args.traza
+            ConfigDades.csv = args.csv
 
         else:
             print("# Comença la configuració")
             ConfigDades.mostradors1 = input(
                 f"Quants treballadors vols disponibles al primer torn? - 02:00 - 12:00\n")
+            # Definim mostradors inicials com torn 1
+            ConfigDades.mostradors = ConfigDades.mostradors1
+
             ConfigDades.mostradors2 = input(
                 f"Quants treballadors vols disponibles al segon torn? - 12:00 - 18:00\n")
             ConfigDades.mostradors3 = input(
                 f"Quants treballadors vols disponibles al tercer torn? - 18:00 - 22:30\n")
 
             ConfigDades.passatgers = input(f"Quants passatgers? ")
-            ConfigDades.veuretraza = input(f"Vols veure traza? Sí, No ")
+            ConfigDades.veuretraza = input(f"Vols veure traza? Si, No ")
             ConfigDades.csv = input(
-                f"Vols exportar el resultat a csv? Sí, No ")
+                f"Vols exportar el resultat a csv? Si, No ")
             print("\n")

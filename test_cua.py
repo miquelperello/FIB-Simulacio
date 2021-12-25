@@ -105,6 +105,3 @@ def test_tractar_ENTRA_A_CUA(event, mostradorslliures, mostradorsocupats, expect
         if (i.type == EventType.PASSATGER_A_MOSTRADOR):
             comptadoractual += 1
     assert (comptadoractual - comptadorprevis) == expected
-
-# TODO
-# EventType.PASSATGER_SURT_MOSTRADOR

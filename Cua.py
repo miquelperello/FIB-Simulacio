@@ -1,4 +1,3 @@
-
 from tkinter.constants import S
 from Passatger import *
 from Mostradors import *
@@ -10,11 +9,13 @@ class Cua:
 
     cua = []
 
-    def __init__(self, scheduler, mostradors):
+    def __init__(self):
         cua = []
+        self.state = State.ACTIVE
+
+    def connecta(self, scheduler, mostradors):
         self.mostradors = mostradors
         self.scheduler = scheduler
-        self.state = State.ACTIVE
 
     def mostradorslliures(self):
         return self.mostradors.return_mostrador_lliures()
@@ -46,6 +47,8 @@ class Cua:
     def tractarEsdeveniment(self, event):
 
         if(event.type == EventType.ENTRA_A_CUA):
+            # Augmentem usuaris a cua - Estadístic scheduler
+            self.scheduler.pa_cua += 1
             # Primer, afegeixo el passatger a la cua
             self.cua.append(event.entitat)
             # Poso a estat WAITING
@@ -77,6 +80,9 @@ class Cua:
             self.afegeixMostradorLliure(event)
 
             # Estadístics
+
+            # Actualitzem passatgers surten de mostrador - estadístic
+            self.scheduler.pa_surt_mostra += 1
             # Temps Cua Sortida
             event.entitat.temps_sortida_mostrador = event.tid
             temps_passatger_CUA_SORTIDA = event.entitat.temps_sortida_mostrador - \
@@ -105,7 +111,7 @@ class Cua:
             # Definim el mostradorslliures() ja que, tot i acabar d'alliberar un mostrador, és possible que sigui fora d'horari (últim torn) i no hi hagi cap.
             if((len(self.cua)) > 0 and self.mostradorslliures()):
                 # Seleccionem el mostrador lliure, que l'acaba de deixar el passatger de l'event.
-                mostrador_lliure = self.eliminaMostradorLliure(event)
+                mostrador_lliure = self.eliminaMostradorLliure()
                 # Recuperem al passatger de la cua
                 self.RecuperaPassatgerCua(event, mostrador_lliure)
 

@@ -29,7 +29,7 @@ class Scheduler:
     def run(self):
         # configurar el model per consola, arxiu de text...
         self.crearModel()
-        self.Config.configurarModel()
+        self.config.configurarModel()
 
         # rellotge de simulacio a 0
         self.currentTime = 0
@@ -49,27 +49,23 @@ class Scheduler:
         # self.recollirEstadistics()
 
     def trace(self, event):
-
-        color = Colors.HEADER
-        if event.type == EventType.ENTRA_A_CUA:
-            color = Colors.OKBLUE
-            self.pa_cua += 1
-        elif event.type == EventType.PASSATGER_A_MOSTRADOR:
-            color = Colors.HEADER
-            self.pa_mostra += 1
-        elif event.type == EventType.PASSATGER_SURT_MOSTRADOR:
-            color = Colors.OKGREEN
-            self.pa_surt_mostra += 1
-        elif event.type == EventType.MOSTRADOR_INICIALITZAT:
-            color = Colors.OKCYAN
-        elif event.type == EventType.CANVI_DE_TORN:
-            color = Colors.WARNING
-        elif event.type == EventType.SimulationEnd:
-            color = Colors.FAIL
-
-        if (self.Config.veuretraza == 0):
+        if (self.config.veuretraza == 'No'):
             return
-        elif (self.Config.veuretraza == 1):
+        elif (self.config.veuretraza == 'Si'):
+            color = Colors.HEADER
+            if event.type == EventType.ENTRA_A_CUA:
+                color = Colors.OKBLUE
+            elif event.type == EventType.PASSATGER_A_MOSTRADOR:
+                color = Colors.HEADER
+            elif event.type == EventType.PASSATGER_SURT_MOSTRADOR:
+                color = Colors.OKGREEN
+            elif event.type == EventType.MOSTRADOR_INICIALITZAT:
+                color = Colors.OKCYAN
+            elif event.type == EventType.CANVI_DE_TORN:
+                color = Colors.WARNING
+            elif event.type == EventType.SimulationEnd:
+                color = Colors.FAIL
+
             print(color, event.tid, event.type, ' ', event.objekt, Colors.ENDC)
 
     def inicialitzaesdeveniments(self):
@@ -81,15 +77,14 @@ class Scheduler:
         a = 10
 
     def crearModel(self):
-        self.Config = ConfigDades()
-
+        self.config = ConfigDades()
         self.mostradors = Mostradors()
-        self.Cua = Cua(self, self.mostradors)
-        self.source = Source(self, self.Config, self.Cua, self.mostradors)
-        # TO-DO Refactor
-        self.mostradors.connecta(self.Cua, self.Config, self)
+        self.cua = Cua()
+        self.source = Source()
 
-        # self.mostradors.inicialitzaMostradors(self.Config)
+        self.cua.connecta(self, self.mostradors)
+        self.source.connecta(self, self.config, self.cua, self.mostradors)
+        self.mostradors.connecta(self.cua, self.config, self)
 
     def returnLlistaEsdeveniments(self):
         global eventList
@@ -116,12 +111,12 @@ class Scheduler:
 
         print('Passatgers que han perdut l\'avió: ', self.pa_han_perdut_avio)
 
-        if (self.Config.csv):
+        if (self.config.csv == 'Si'):
             dades_csv = []
-            dades_csv.append(int(self.Config.mostradors1))
-            dades_csv.append(int(self.Config.mostradors2))
-            dades_csv.append(int(self.Config.mostradors3))
-            dades_csv.append(int(self.Config.passatgers))
+            dades_csv.append(int(self.config.mostradors1))
+            dades_csv.append(int(self.config.mostradors2))
+            dades_csv.append(int(self.config.mostradors3))
+            dades_csv.append(int(self.config.passatgers))
             dades_csv.append(int(round(self.temps_mitja_CUA, 2)))
             dades_csv.append(int(round(self.temps_mitja_MOSTRADOR, 2)))
             dades_csv.append(int(round(self.temps_mitja_CUA_SORTIDA, 2)))

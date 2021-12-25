@@ -2,10 +2,6 @@ from auxiliar import *
 
 
 class Event:
-    tipus = ""
-    implicat = ""
-    temps = ""
-    entitat = ""
 
     def __init__(self, implicat, temps, tipus, entitat=None, fra=None):
 
