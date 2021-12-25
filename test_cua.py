@@ -41,7 +41,7 @@ def EventCUA(p):
     ]
 )
 def test_eliminaPassatgerCua(cuaList, entitat,  expected):
-    cua = Cua(None, None)
+    cua = Cua()
     cua.cua = cuaList
     cua.eliminaPassatgerCua(entitat)
 
@@ -61,7 +61,8 @@ def test_eliminaPassatgerCua(cuaList, entitat,  expected):
 )
 def test_RecuperaPassatgerCua(cuaList, event, mostrador_lliure, expected):
     scheduler = Scheduler()
-    cua = Cua(scheduler, None)
+    cua = Cua()
+    cua.connecta(scheduler, None)
     cua.cua = cuaList
     cua.RecuperaPassatgerCua(event, mostrador_lliure)
     assert (cua.cua[0] != expected)
@@ -84,7 +85,8 @@ def test_tractar_ENTRA_A_CUA(event, mostradorslliures, mostradorsocupats, expect
     mostradors = Mostradors()
     mostradors.connecta(None, config, scheduler)
     mostradors.LlistaMostradorsLliures = []
-    cua = Cua(scheduler, mostradors)
+    cua = Cua()
+    cua.connecta(scheduler, mostradors)
 
     for i in range(0, mostradorslliures):
         m = Mostradors()

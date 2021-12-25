@@ -71,10 +71,11 @@ def test_elimina_mostrador_lliure(mostradors_config, LlistaMostradorsLliures, ex
 def test_tractaEvent_Mostrador(tid, mostradors, mostradors2, mostradors3, expected):
     mostradors = Mostradors()
     config = Config()
+    cua = Cua()
     config.mostradors = mostradors
     config.mostradors2 = mostradors2
     config.mostradors3 = mostradors3
-    mostradors.connecta(None, config, None)
+    mostradors.connecta(cua, config, None)
     mostradors.config.mostradors = mostradors
 
     mEvent = Event(None, tid, EventType.CANVI_DE_TORN)
