@@ -14,4 +14,5 @@ for item in range(0, len(llistaComparativa)):
     plt.scatter(x=df.Passatgers, y=llistaComparativa[item])
     plt.ylabel(NomComparativa[item])
     plt.xlabel("Passatgers")
+
     plt.show()
