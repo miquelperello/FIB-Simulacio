@@ -43,6 +43,16 @@ class Mostradors:
         self.LlistaMostradorsLliures[int(
             event.entitat.mostrador_assignat)].estat = State.ACTIVE
 
+    def defineixTempsCua(self):
+        # Pels passatgers que segueixen a la cua, deixem temps actual com a temps final
+        for i in self.cua.cua:
+            temps_passatger_CUA = (73800 - i.temps_entrada_cua)
+            if(self.scheduler.temps_mitja_CUA != 0):
+                self.scheduler.temps_mitja_CUA = (
+                    self.scheduler.temps_mitja_CUA + temps_passatger_CUA)/2
+            else:
+                self.scheduler.temps_mitja_CUA = temps_passatger_CUA
+
     def tractarEsdeveniment(self, event):
         if (event.type == EventType.MOSTRADOR_INICIALITZAT):
             self.LlistaMostradorsLliures.append(event.entitat)
@@ -87,6 +97,7 @@ class Mostradors:
             elif(event.tid == 73800):
                 self.config.mostradors = 0
                 self.estat = State.INACTIVE
+                self.defineixTempsCua()
             # Si s'acaba d'incorporar algun treballador i tenim mostrador lliure...
             if((len(self.cua.cua)) > 0 and self.return_mostrador_lliures()):
                 # Seleccionem el mostrador lliure, que l'acaba de deixar el passatger de l'event.
