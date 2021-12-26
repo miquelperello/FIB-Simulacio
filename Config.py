@@ -99,7 +99,7 @@ class Config:
         ENTRY5 = Entry(TOP, bd=8, width=10, font="Roboto 11")
         ENTRY5.place(x=425, y=241)
 
-        LABEL6 = Label(TOP, bg="#382343", fg="#ffffff", text="Vols veure traza? 1 Sí, 0 No ", bd=6, font=(
+        LABEL6 = Label(TOP, bg="#382343", fg="#ffffff", text="Vols veure traza? Sí o No ", bd=6, font=(
             "Helvetica", 10, "bold"), pady=5)
         LABEL6.place(x=75, y=301)
         ENTRY6 = Entry(TOP, bd=8, width=10, font="Roboto 11")

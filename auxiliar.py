@@ -10,20 +10,17 @@ class State(Enum):
     WAITING = 6
     READY = 7
     PROCESSING = 8
-    
 
 
 class EventType(Enum):
-    ENTRA_A_CUA = 1
-    PASSATGER_A_MOSTRADOR = 2
-    PASSATGER_SURT_MOSTRADOR = 3
-    MOSTRADOR_INICIALITZAT = 4
-    MOSTRADOR_LLIURE = 5
-    MOSTRADOR_OCUPAT = 6
+    SimulationStart = 1
+    MOSTRADOR_INICIALITZAT = 2
+    NOVA_ARRIBADA = 3
+    ENTRA_A_CUA = 4
+    PASSATGER_A_MOSTRADOR = 5
+    PASSATGER_SURT_MOSTRADOR = 6
     CANVI_DE_TORN = 7
-    SimulationStart = 8
-    SimulationEnd = 9
-    NOVA_ARRIBADA = 10
+    SimulationEnd = 8
 
 
 class Colors:
