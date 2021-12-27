@@ -15,11 +15,9 @@ class Passatger:
 
         global id
         if (temps == None):
-            self.id = randint(200, 80000)
+            self.id = randint(0, 10000)
             self.estat = State.ACTIVE
-            # TO-DO
             self.maleta = int(np.random.triangular(0, 1, 4))
-            self.documentacio = randint(0, 1)
             self.temps = 0
             self.mostrador_assignat = -1
             self.perd_avio = 0
@@ -31,7 +29,6 @@ class Passatger:
             self.id = randint(0, 10000)
             self.estat = State.ACTIVE
             self.maleta = randint(0, 4)
-            self.documentacio = randint(0, 1)
             self.temps = str(temps)
             self.mostrador_assignat = -1
 

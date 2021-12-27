@@ -18,12 +18,12 @@ class Scheduler:
     pa_han_perdut_avio = 0
 
     def __init__(self):
-        # creació dels objectes que composen el meu model
+        # creació del primer event per crear Objectes
         self.simulationStart = Event(self, 0, EventType.SimulationStart, None)
         self.afegirEsdeveniment(self.simulationStart)
 
     def run(self):
-        # configurar el model per consola
+        # configurar el model per GUI
         self.crearModel()
         self.config.configurarModel()
 
@@ -34,6 +34,7 @@ class Scheduler:
             # recuperem event simulacio
             if ((len(self.eventList) != 0)):
                 event = Scheduler.eventList.pop(0)
+                # fem traça
                 self.trace(event)
                 # deleguem l'acció a realitzar de l'esdeveniment a l'objecte que l'ha generat
                 event.objekt.tractarEsdeveniment(event)
@@ -75,6 +76,7 @@ class Scheduler:
         a = 10
 
     def crearModel(self):
+        # Creem instàncies i connectem referències
         self.config = Config()
         self.mostradors = Mostradors()
         self.cua = Cua()
@@ -83,10 +85,6 @@ class Scheduler:
         self.cua.connecta(self, self.mostradors)
         self.source.connecta(self, self.config, self.cua, self.mostradors)
         self.mostradors.connecta(self.cua, self.config, self)
-
-    def returnLlistaEsdeveniments(self):
-        global eventList
-        return Scheduler.eventList
 
     def tractarEsdeveniment(self, event):
 

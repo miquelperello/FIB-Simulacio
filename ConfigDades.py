@@ -12,12 +12,10 @@ class ConfigDades:
     passatgers = "None"
     veuretraza = "None"
     csv = "None"
-    iteracions = "None"
     parser = "None"
 
     def __init__(self):
         global parser
-        self.state = "inactiu"
         parser = argparse.ArgumentParser()
         parser.add_argument("-m1",
                             "--mostrador1",
@@ -41,12 +39,12 @@ class ConfigDades:
 
         parser.add_argument("-t",
                             "--traza",
-                            help="Defineix si es vol que s'imprimeixi traza. Sí o No.",
+                            help="Defineix si es vol que s'imprimeixi traza. Si o No.",
                             type=str)
 
         parser.add_argument("-c",
                             "--csv",
-                            help="Defineix si es vol que es generi csv. Sí o No.",
+                            help="Defineix si es vol que es generi csv. Si o No.",
                             type=str)
 
     def configurarModel(self):
@@ -74,7 +72,6 @@ class ConfigDades:
                 f"Quants treballadors vols disponibles al segon torn? - 12:00 - 18:00\n")
             ConfigDades.mostradors3 = input(
                 f"Quants treballadors vols disponibles al tercer torn? - 18:00 - 22:30\n")
-
             ConfigDades.passatgers = input(f"Quants passatgers? ")
             ConfigDades.veuretraza = input(f"Vols veure traza? Si, No ")
             ConfigDades.csv = input(

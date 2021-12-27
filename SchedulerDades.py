@@ -22,12 +22,12 @@ class Scheduler:
     parser = ""
 
     def __init__(self):
-        # creació dels objectes que composen el meu model
+        # creació del primer event per crear Objectes
         self.simulationStart = Event(self, 0, EventType.SimulationStart, None)
         self.afegirEsdeveniment(self.simulationStart)
 
     def run(self):
-        # configurar el model per consola, arxiu de text...
+        # configurar el model per consola
         self.crearModel()
         self.config.configurarModel()
 
@@ -77,6 +77,7 @@ class Scheduler:
         a = 10
 
     def crearModel(self):
+        # Creem instàncies i connectem referències
         self.config = ConfigDades()
         self.mostradors = Mostradors()
         self.cua = Cua()
@@ -85,10 +86,6 @@ class Scheduler:
         self.cua.connecta(self, self.mostradors)
         self.source.connecta(self, self.config, self.cua, self.mostradors)
         self.mostradors.connecta(self.cua, self.config, self)
-
-    def returnLlistaEsdeveniments(self):
-        global eventList
-        return Scheduler.eventList
 
     def tractarEsdeveniment(self, event):
 
@@ -123,9 +120,9 @@ class Scheduler:
             dades_csv.append(int(self.pa_han_perdut_avio))
 
             headerList = [
-                'Temps a la cua', "Temps al mostrador", "Temps entrada a cua fins sortida mostrador", "Persones que han perdut l'avió"]
-
-            # File darf nicht offen in excel sein, sonst keine permission
+                'Temps a la cua', "Temps al mostrador",
+                "Temps entrada a cua fins sortida mostrador",
+                "Persones que han perdut l'avió"]
 
             filename = 'export.csv'
             file_exists = os.path.isfile(filename)

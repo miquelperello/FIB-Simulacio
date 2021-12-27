@@ -2,14 +2,11 @@ from enum import Enum
 
 
 class State(Enum):
-    SERVICE = 1
-    INACTIVE = 2
-    ACTIVE = 3
-    BUSY = 4
-    OCCUPIED = 5
-    WAITING = 6
-    READY = 7
-    PROCESSING = 8
+    INACTIVE = 1
+    ACTIVE = 2
+    OCCUPIED = 3
+    WAITING = 4
+    PROCESSING = 5
 
 
 class EventType(Enum):

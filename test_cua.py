@@ -3,9 +3,6 @@ from Source import *
 from Scheduler import *
 from auxiliar import *
 from Event import *
-from collections import Counter
-import sys
-sys.setrecursionlimit(10000)
 
 
 c = []

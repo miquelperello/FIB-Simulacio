@@ -12,12 +12,8 @@ class Mostradors:
     def __init__(self):
         self.estat = State.ACTIVE
 
-    # TO-DO Ver si se uisa!
-    def inicialitzaMostradors(self):
-        for i in range(0, int(self.config.mostradors)):
-            self.LlistaMostradorsLliures.append(i)
-
     def connecta(self, cua, config, scheduler):
+        # Connectem classes
         self.cua = cua
         self.scheduler = scheduler
         self.config = config
@@ -31,7 +27,6 @@ class Mostradors:
 
     def elimina_mostrador_lliure(self):
         # Mirem pels Mostradors actuals disponibles, si hi ha algun amb estat ACTIVE, el deixem com a OCUPAT i el retornem
-
         for item in range(0, int(self.config.mostradors)):
             if (self.LlistaMostradorsLliures[item].estat == State.ACTIVE):
                 self.LlistaMostradorsLliures[item].estat = State.OCCUPIED
@@ -44,7 +39,8 @@ class Mostradors:
             event.entitat.mostrador_assignat)].estat = State.ACTIVE
 
     def defineixTempsCua(self):
-        # Pels passatgers que segueixen a la cua, deixem temps actual com a temps final
+        # Pels passatgers que segueixen a la cua, com s'ha tancat el procés de check in, els deixem el seu temps de
+        # cua final com el temps actual.
         for i in self.cua.cua:
             temps_passatger_CUA = (73800 - i.temps_entrada_cua)
             if(self.scheduler.temps_mitja_CUA != 0):

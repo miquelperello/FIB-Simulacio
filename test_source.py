@@ -3,7 +3,6 @@ from Source import *
 from Scheduler import *
 from auxiliar import *
 from Event import *
-from collections import Counter
 
 
 @pytest.mark.parametrize(

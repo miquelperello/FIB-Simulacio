@@ -45,7 +45,8 @@ class Source:
         self.tempsEntreArribades()
 
     def inicialitzaMostradors(self):
-        # Definim tants mostradors com definit a config.
+        # Definim tants mostradors com el definit a config.
+        # Inicialitzem el màxim de mostradors, tot i que després a cada torn s'utilitzen els definits
         for i in range(0, max(int(self.config.mostradors1), int(self.config.mostradors2), int(self.config.mostradors3))):
             mostrador = Mostradors()
             mostradorInicialitzat = Event(
@@ -81,7 +82,7 @@ class Source:
 
         # Creem esdeveniments de creació de passatgers
         for i in range(0, len(self.bins)):
-            # Si en el torn hi ha passatgers
+            # Si al torn hi ha passatgers
             if (int(self.n[i]) > 0):
                 EventNovaArribada = Event(self, int((self.bins[i]-2)*3600),
                                           EventType.NOVA_ARRIBADA, i)
@@ -92,10 +93,8 @@ class Source:
         tempsEntreArribades = 0
         for j in range(0, int(self.n[comptador])):
             passatger = Passatger()
-            # Definim un interval de 10 segons entre les persones
+            # Definim un interval de 10 segons entre les persones de cada torn
             tempsEntrePersones += 10
-            # creem tants passatgers com definit i li assignem un temps d'arribada
-            # A self.bins[x] trobem l'hora d'arribada i a self.n[x] el nombre de passatgers que arriben a aquella hora.
             # A la variable <<self.bins[comptador]>> trobem la hora d'arribada. Li restem 2 ja que definim el moment 0 com les 2:00h del matí.
             tempsEntreArribades += int((self.bins[comptador]-2)*3600)
             tempsEntreArribades += tempsEntrePersones
@@ -121,6 +120,8 @@ class Source:
 
     def GenerateDistribution(self):
         # Definim distribució explicada a la memòria
+        # A self.bins[x] trobem l'hora d'arribada i a self.n[x] el nombre de passatgers que arriben a aquella hora.
+
         if (int((self.config.passatgers)) % 2) == 0:
             X1 = gfg = np.random.triangular(
                 2, 10, 16, int(int(self.config.passatgers) / 2))

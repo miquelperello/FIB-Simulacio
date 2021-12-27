@@ -10,10 +10,10 @@ class Cua:
     cua = []
 
     def __init__(self):
-        cua = []
         self.state = State.ACTIVE
 
     def connecta(self, scheduler, mostradors):
+        # Connectem referències amb les altres classes
         self.mostradors = mostradors
         self.scheduler = scheduler
 
@@ -34,6 +34,7 @@ class Cua:
         """"
         Agafa al primer passatger a la cua, i l'envia al mostrador
         :event: l'event de Sortida del Mostrador.
+        :mostrador_lliure: el mostrador lliure per assignar
         """
         # Seleccionem el primer passatger de la cua
         _passatger = self.cua.pop(0)
@@ -47,17 +48,17 @@ class Cua:
     def tractarEsdeveniment(self, event):
 
         if(event.type == EventType.ENTRA_A_CUA):
-            # Augmentem usuaris a cua - Estadístic scheduler
+            # Augmentem usuaris a cua -> Estadístic scheduler
             self.scheduler.pa_cua += 1
             # Primer, afegeixo el passatger a la cua
             self.cua.append(event.entitat)
-            # Poso a estat WAITING
+            # Poso passatger a estat WAITING
             event.entitat.estat = State.WAITING
             # Li assigno el temps
             event.entitat.temps_entrada_cua = event.tid
             # Si hi ha algun mostrador lliure
             if(self.mostradorslliures() > 0):
-
+                # Creem event per anar al mostrador
                 event = Event(self.mostradors, event.tid,
                               EventType.PASSATGER_A_MOSTRADOR, event.entitat)
                 # Posem al passatger el temps de mostrador

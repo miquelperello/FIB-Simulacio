@@ -14,7 +14,7 @@ class Config:
     veuretraza = "None"
 
     def __init__(self):
-        self.state = "inactiu"
+        pass
 
     def get_mostradors1():
         mostradors1 = ENTRY2.get()
@@ -43,6 +43,7 @@ class Config:
             messagebox.showinfo("Result", "Please enter valid data!")
 
     def get_all():
+        # Al fer clic a Acceptar, es crida aquesta funció que guarda els valors
         Config.get_mostradors1()
         Config.get_mostradors2()
         Config.get_mostradors3()
@@ -59,8 +60,7 @@ class Config:
         TOP.resizable(width=True, height=True)
         bg = PhotoImage(file="airplane.gif")
 
-        # the following alters the Listbox
-
+        # Configuració ComboBox
         ebg = '#382343'
         fg = "#ffffff"
         TOP.option_add('*TCombobox*Listbox*Background', ebg)
